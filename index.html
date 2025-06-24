@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./css/styles.css" />
+    <title>Cafetería</title>
+  </head>
+  <body>
+    <h1>Cafetería los Gonzales</h1>
+    <div class="formulario">
+      <form action="" name="_pedido" id="_pedido" method="post">
+        <div class="campos">
+          <label for="nombreCliente">Nombre del Cliente</label>
+          <input type="text" id="nombreCliente" name="nombreCliente" />
+        </div>
+        <div class="campos">
+          <label for="nombreProducto">Nombre del Producto</label>
+          <input type="text" id="nombreProducto" name="nombreProducto" />
+        </div>
+        <div class="campos">
+          <label for="precio">Precio</label>
+          <input type="number" id="precio" name="precio" />
+        </div>
+        <div class="campos">
+          <label for="unidades">Unidades</label>
+          <input type="number" id="unidades" name="unidades" />
+        </div>
+      </form>
+      <button type="submit" form="_pedido">Agregar al Pedido</button>
+    </div>
+    <div class="info">
+      <h2>Pedido</h2>
+      <div class="estatusG">
+        <h3>Estatus</h3>
+        <h4 id="estatus">N/A</h4>
+        <span class="iconoEstatus" id="iconoEstatus"></span>
+      </div>
+    </div>
+    <table id="tablaPedidos">
+      <thead>
+        <tr>
+          <th>Cliente</th>
+          <th>Producto</th>
+          <th>Precio</th>
+          <th>Unidades</th>
+          <th>Total</th>
+        </tr>
+      </thead>
+      <tbody id="filas"></tbody>
+    </table>
+    <script src="./js/pedidos.js"></script>
+  </body>
+</html>
