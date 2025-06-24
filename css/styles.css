@@ -21,14 +21,18 @@ h1 {
   -webkit-animation: focus-in-contract-bck 1.5s
     cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
   animation: focus-in-contract-bck 2s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+  text-shadow: 0 0 5px #ff005e, 0 0 10px #ff005e, 0 0 20px #ff005e,
+    0 0 40px #ff005e, 0 0 80px #ff005e;
+  animation: glow 1.5s infinite alternate;
 }
 .formulario {
   display: flex;
   justify-content: start;
   gap: 1rem;
-  width: 60%;
+  width: 50%;
+  height: 12rem;
   align-items: center;
-  background: #fff8dc; /* Amarillo crema */
+  background: #fff8dc;
   background-image: repeating-linear-gradient(
     transparent,
     transparent 24px,
@@ -40,16 +44,15 @@ h1 {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   position: relative;
   animation: postItFloat 3s ease-in-out infinite;
-  padding-block: 0.5rem;
 }
 
 form {
   width: 80%;
+  height: 90%;
   display: flex;
   flex-direction: column;
-  gap: 1rem;
-  justify-content: start;
-  align-items: center;
+  justify-content: space-between;
+  align-items: stretch;
 }
 .campos {
   width: 100%;
@@ -81,6 +84,10 @@ form {
   outline: none;
 }
 
+.campos input:hover {
+  border-bottom: 1px solid rgb(137, 137, 137);
+}
+
 .campos input::-webkit-outer-spin-button,
 .campos input::-webkit-inner-spin-button {
   -webkit-appearance: none;
@@ -106,13 +113,15 @@ form {
   transition: all 0.3s ease;
 }
 
-.formulario button:hover {
-  background: #a0522d; /* Café más claro */
+.formulario button:hover,
+.comprar:hover {
+  background: #a0522d;
   transform: translateY(-2px);
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
 }
 
-.formulario button:active {
+.formulario button:active,
+.comprar:active {
   transform: translateY(0px);
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
@@ -126,15 +135,15 @@ form {
   padding-inline: 1rem;
 }
 .info h2 {
-  width: 70%;
+  width: 50%;
   text-align: start;
-  font-size: 3rem;
+  font-size: 4rem;
   -webkit-animation: focus-in-expand 4s cubic-bezier(0.25, 0.46, 0.45, 0.94)
     both;
   animation: focus-in-expand 4s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
 }
 .info .estatusG {
-  width: 30%;
+  width: 50%;
   display: flex;
   gap: 0.5rem;
   justify-content: space-between;
@@ -173,10 +182,62 @@ table tbody tr td {
 }
 
 table tbody tr:hover {
-  background-color: #a0522d;
+  background-color: #d2b48c;
   cursor: pointer;
 }
 
+.botonEliminar {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+.botonEliminar:hover {
+  animation: pulse 2s infinite;
+}
+
+.botonEliminar i {
+  color: #dc3545;
+}
+
+.comprar {
+  width: 15rem;
+  height: 4rem;
+  border: none;
+  border-radius: 25px;
+  align-self: flex-end;
+  background-color: #8b4513;
+  color: #fff8dc;
+  cursor: pointer;
+  display: none;
+}
+
+.comprar i {
+  margin-right: 1rem;
+}
+
+.coffee-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 31.25rem;
+  height: 31.25rem;
+  opacity: 0.15;
+  z-index: -1;
+  pointer-events: none;
+  filter: sepia(1) hue-rotate(20deg) saturate(2) drop-shadow(0 0 10px #602c06);
+  transition: opacity 0.3s ease;
+}
+
+@keyframes glow {
+  0% {
+    text-shadow: 0 0 5px #ff005e, 0 0 10px #ff005e, 0 0 20px #ff005e,
+      0 0 40px #ff005e, 0 0 80px #ff005e;
+  }
+  100% {
+    text-shadow: 0 0 10px #00d4ff, 0 0 20px #00d4ff, 0 0 40px #00d4ff,
+      0 0 80px #00d4ff, 0 0 160px #00d4ff;
+  }
+}
 @keyframes postItFloat {
   0%,
   100% {
@@ -258,5 +319,21 @@ table tbody tr:hover {
   }
   50% {
     transform: scale(1.1);
+  }
+}
+
+@media screen and (max-width: 75rem) {
+  body,
+  .formulario,
+  .info,
+  table {
+    width: 100%;
+  }
+
+  .coffee-background {
+    width: 100px;
+    height: 100px;
+    top: 10px;
+    left: 10px;
   }
 }

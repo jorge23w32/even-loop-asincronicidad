@@ -13,7 +13,10 @@ let pedidos = [];
 
 //Crea el pedido y actualiza la tabla
 function crearPedido() {
+  const estatus = document.getElementById("estatus");
+  const iconoEstatus = document.getElementById("iconoEstatus");
   const datos = new FormData(document.getElementById("_pedido"));
+  const comprar = document.getElementById("comprar");
   pedidos.push(
     new Pedido(
       datos.get("nombreCliente"),
@@ -23,11 +26,17 @@ function crearPedido() {
     )
   );
   id++;
-  mostrarPedidos(pedidos);
+  setTimeout(() => {
+    mostrarPedidos();
+    estatus.innerText = "EN PROCESO!";
+    iconoEstatus.style.background = "#FFFF00";
+    comprar.style.display = "inline-block";
+    limpiarCampos();
+  }, Math.floor(Math.random() * 9000) + 1000);
 }
 
 //Muestra la lista de pedidos en la tabla
-function mostrarPedidos(pedidos) {
+function mostrarPedidos() {
   const filas = document.getElementById("filas");
   filas.innerHTML = "";
 
@@ -39,14 +48,68 @@ function mostrarPedidos(pedidos) {
             <td>${it.precio.toFixed(2)}</td>
             <td>${it.unidades}</td>
             <td>${it.total.toFixed(2)}</td>
+            <td><button class="botonEliminar" onclick="eliminarPedido(${
+              it.id
+            })">
+            <i class="fa fa-trash-o fa-2x" aria-hidden="true"></i>
+            </button></td>
         `;
     filas.appendChild(fila);
   });
 }
 
 document.getElementById("_pedido").addEventListener("submit", function (e) {
-  e.preventDefault(); // Evita que se envíe el formulario
+  e.preventDefault();
   crearPedido();
 });
 
-function finalizarPedido() {}
+function eliminarPedido(id) {
+  console.log(id);
+
+  const estatus = document.getElementById("estatus");
+  const iconoEstatus = document.getElementById("iconoEstatus");
+  const comprar = document.getElementById("comprar");
+
+  pedidos = pedidos.filter((pedido) => pedido.id != id);
+  setTimeout(() => {
+    mostrarPedidos();
+    if (pedidos.length == 0) {
+      estatus.innerText = "N/A";
+      iconoEstatus.style.background = "#AB0000";
+      comprar.style.display = "none";
+    }
+  }, Math.floor(Math.random() * 9000) + 1000);
+}
+function finalizarPedido() {
+  let totalPagar = 0.0;
+  pedidos.forEach((it) => {
+    totalPagar += it.total;
+  });
+  const filas = document.getElementById("filas");
+  const fila = document.createElement("tr");
+  const estatus = document.getElementById("estatus");
+  const iconoEstatus = document.getElementById("iconoEstatus");
+  fila.innerHTML = `
+            <td></td>
+            <td></td>
+            <td></td>
+            <td style="text-aling: end; font-weight: bolder;">Total</td>
+            <td>${totalPagar.toFixed(2)}</td>
+            <td></td>
+  `;
+  setTimeout(() => {
+    filas.appendChild(fila);
+    estatus.innerText = "Confirmado!";
+    iconoEstatus.style.backgroundColor = "#28a745";
+    limpiarCampos(true);
+  }, Math.floor(Math.random() * 5000) + 1000);
+}
+
+function limpiarCampos(todos = false) {
+  if (todos) {
+    document.getElementById("nombreCliente").value = "";
+    document.getElementById("nombreProducto").value = "";
+  }
+  document.getElementById("precio").value = "";
+  document.getElementById("unidades").value = "";
+}
